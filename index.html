@@ -1,15 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feedback Form</title>
     <style>
-        /* Existing Styling */
         body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    height: 100%;
+            font-family: Arial, sans-serif;
+            margin: 20px;
         }
         .form-container {
             max-width: 800px;
@@ -93,46 +89,17 @@
             font-size: 14px;
             box-sizing: border-box;
         }
-
-        .success-animation {
-            position: relative;
-        }
-
-        .success-animation::after {
-            content: '✔';
-            position: absolute;
-            right: 10px;
-            font-size: 18px;
-            color: #fff;
-            animation: checkmark-animation 1s ease;
-        }
-
-        @keyframes checkmark-animation {
-            0% {
-                transform: scale(0);
-                opacity: 0;
-            }
-            50% {
-                transform: scale(1.2);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
     </style>
 </head>
 <body>
     <div class="form-container">
+
         <!-- Header Image -->
         <div class="header-image">
             <img src="FLC_Logo.png" alt="Header Image" width="100">
         </div>
 
-        <!-- Feedback Form -->
-        <form id="feedback-form" action="https://script.google.com/macros/s/AKfycbyiAgsyM0b69_yPKiXlUUWCH05byrx6-crpo-4sH3kRwwtbgydvRctJZbi_N-jwvCwlDw/exec" method="POST" >
-            
+        <form id="feedback-form" action="https://script.google.com/macros/s/AKfycbwGMsY1_LKcL3WQGRbwc1ISJjENR5pD0qRwCvpNAQU7/dev" method="POST">
             <!-- Name -->
             <label for="name">Your Name:</label><br>
             <input type="text" id="name" name="name" required><br><br>
@@ -170,48 +137,45 @@
             <button class="submit-btn" id="submit-btn" type="submit" disabled>Send Feedback</button>
         </form>
     </div>
-
     <script>
-        function validateForm() {
-            const recommendationSelected = document.querySelector('input[name="recommendation"]:checked') !== null;
-            const satisfactionSelected = document.querySelectorAll('input[name="satisfaction"]:checked').length > 0;
-            document.getElementById('submit-btn').disabled = !(recommendationSelected && satisfactionSelected);
+function validateForm() {
+            // Get the selected recommendation
+            const recommendationInput = document.querySelector('input[name="recommendation"]:checked');
+            const recommendationSelected = recommendationInput !== null;
+
+            // Get the value of the selected recommendation
+            const recommendationValue = recommendationSelected ? recommendationInput.value : "None";
+
+            // Get all selected satisfaction checkboxes
+            const satisfactionChecked = document.querySelectorAll('input[name="satisfaction"]:checked');
+
+            // Convert NodeList to array and map to values
+            const satisfactionValues = Array.from(satisfactionChecked).map(input => input.value);
+            const satisfactionString = satisfactionValues.join(', ');
+
+            // Log values to console for debugging
+            console.log("Selected Recommendation Value:", recommendationValue);
+            console.log("Selected Satisfaction Values:", satisfactionValues);
+            console.log(typeof(satisfactionValues))
+
+
+            // Enable or disable the button based on selection
+            document.getElementById('submit-btn').disabled = !(recommendationSelected && satisfactionValues.length > 0);
         }
-        document.addEventListener('DOMContentLoaded', () => {
-            // Event listeners for recommendation and satisfaction fields
-            document.querySelectorAll('input[name="recommendation"]').forEach(input => {
-                input.addEventListener('change', validateForm);
-            });
-        
-            document.querySelectorAll('input[name="satisfaction"]').forEach(input => {
-                input.addEventListener('change', validateForm);
-            });
-        
-            validateForm(); // Initial validation check
+
+        // Attach event listeners to recommendation and satisfaction checkboxes
+        document.querySelectorAll('input[name="recommendation"]').forEach(input => {
+            input.addEventListener('change', validateForm);
         });
-        document.getElementById('feedback-form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the default form submission
 
-            // Process form data here (if needed)
-
-            // Change button text and style
-            const submitButton = document.getElementById('submit-btn');
-            submitButton.textContent = 'Success!';
-            submitButton.style.backgroundColor = '#28a745'; // Green color for success
-            submitButton.style.color = '#fff';
-
-            // Clear form fields
-            this.reset();
-
-            // Optional: Add a brief delay before changing the button text
-            setTimeout(() => {
-                submitButton.textContent = 'Send Feedback';
-                submitButton.style.backgroundColor = '#007BFF'; // Reset button color
-            }, 2000); // Adjust the delay as needed
+        document.querySelectorAll('input[name="satisfaction"]').forEach(input => {
+            input.addEventListener('change', validateForm);
         });
+
+        // Initial validation check
+        validateForm();
         
+
     </script>
-    
-    
 </body>
 </html>
