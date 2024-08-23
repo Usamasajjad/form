@@ -115,14 +115,31 @@
 
         @media (max-width: 1200px) {
             label, p, input[type="text"], .submit-btn, .rating-buttons label,  .multiple-choice label  {
-                font-size: 1.5rem;
+                font-size: 2rem;
             }
             .multiple-choice input[type="checkbox"] {
-                transform: scale(2.1);
+                transform: scale(2.5);
             }
             .header-image img {
-                width: 200px;
+                width: 300px;
                 height: auto;
+            }
+            body {
+                -webkit-user-select: none; /* Safari */        
+                -moz-user-select: none; /* Firefox */
+                -ms-user-select: none; /* IE10+/Edge */
+                user-select: none;
+
+                margin-top: 20px;
+                margin-bottom: 20px;
+                box-sizing: border-box;
+
+                display: flex; /* Enables flexbox */
+                justify-content: center; /* Centers horizontally */
+                align-items: start; /* Centers vertically */
+
+                height: auto;
+                font-family: Arial, sans-serif;
             }
             
         }
