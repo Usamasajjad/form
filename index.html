@@ -8,7 +8,6 @@
             -moz-user-select: none; /* Firefox */
             -ms-user-select: none; /* IE10+/Edge */
             user-select: none;
-            background: rgba(255, 255, 255, 0.34);
 
             margin:0;
             box-sizing: border-box;
@@ -94,7 +93,6 @@
             border-radius: 4px;
         }
 
-
         .submit-btn:disabled {
             background-color: #ddd;
             cursor: not-allowed;
@@ -111,9 +109,24 @@
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
-            font-size: 0.8rem;
+            font-size: 1rem;
             box-sizing: border-box;
         }
+
+        @media (max-width: 1200px) {
+            label, p, input[type="text"], .submit-btn, .rating-buttons label,  .multiple-choice label  {
+                font-size: 1.5rem;
+            }
+            .multiple-choice input[type="checkbox"] {
+                transform: scale(2.1);
+            }
+            .header-image img {
+                width: 200px;
+                height: auto;
+            }
+            
+        }
+
     </style>
 </head>
 <body>
@@ -166,6 +179,15 @@
     </div>
     <script>
 function validateForm() {
+
+            // Get the Name and Company fields
+            const nameInput = document.querySelector('input[name="name"]').value.trim();
+            const companyInput = document.querySelector('input[name="company"]').value.trim();
+
+            // Check if Name and Company fields are filled
+            const nameFilled = nameInput !== '';
+            const companyFilled = companyInput !== '';
+
             // Get the selected recommendation
             const recommendationInput = document.querySelector('input[name="recommendation"]:checked');
             const recommendationSelected = recommendationInput !== null;
@@ -180,14 +202,14 @@ function validateForm() {
             const satisfactionValues = Array.from(satisfactionChecked).map(input => input.value);
             const satisfactionString = satisfactionValues.join(', ');
 
-            // Log values to console for debugging
-            console.log("Selected Recommendation Value:", recommendationValue);
-            console.log("Selected Satisfaction Values:", satisfactionValues);
-
-
             // Enable or disable the button based on selection
-            document.getElementById('submit-btn').disabled = !(recommendationSelected && satisfactionValues.length > 0);
+            document.getElementById('submit-btn').disabled = !(recommendationSelected && satisfactionValues.length > 0 && nameFilled && companyFilled);
         }
+
+        // Attach event listeners to Name and Company input fields
+        document.querySelectorAll('input[name="name"], input[name="company"]').forEach(input => {
+            input.addEventListener('input', validateForm);
+        });
 
         // Attach event listeners to recommendation and satisfaction checkboxes
         document.querySelectorAll('input[name="recommendation"]').forEach(input => {
