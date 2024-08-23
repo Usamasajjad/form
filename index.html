@@ -4,11 +4,19 @@
     <title>Feedback Form</title>
     <style>
         body {
+            -webkit-user-select: none; /* Safari */        
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* IE10+/Edge */
+            user-select: none;
+            background: rgba(255, 255, 255, 0.34);
+
             margin:0;
+            box-sizing: border-box;
+
             display: flex; /* Enables flexbox */
             justify-content: center; /* Centers horizontally */
             align-items: center; /* Centers vertically */
-            box-sizing: border-box;
+
             height: 100vh;
             font-family: Arial, sans-serif;
         }
@@ -85,10 +93,18 @@
             padding: 10px 20px;
             border-radius: 4px;
         }
+
+
         .submit-btn:disabled {
             background-color: #ddd;
             cursor: not-allowed;
         }
+
+        .submit-btn.success {
+            background-color: #28a745; /* Green color */
+            color: white;
+        }
+
         input[type="text"] {
             width: 100%;
             margin-top: 10px;
@@ -108,7 +124,7 @@
             <img src="FLC_Logo.png" alt="Header Image" width="100">
         </div>
 
-        <form id="feedback-form" action="https://script.google.com/macros/s/AKfycbwGMsY1_LKcL3WQGRbwc1ISJjENR5pD0qRwCvpNAQU7/dev" method="POST">
+        <form id="feedback-form" action="https://script.google.com/macros/s/AKfycbwI2yaWH-162lOegAvbwIiQ5pafoCYl-NP51dMN7O3hJ97L2TSlBkDMDq1O6XnLOPKi7Q/exec" method="POST" target="iframe">
             <!-- Name -->
             <label for="name">Your Name:</label><br>
             <input type="text" id="name" name="name" required><br><br>
@@ -145,6 +161,9 @@
             <!-- Submit Button -->
             <button class="submit-btn" id="submit-btn" type="submit" disabled>Send Feedback</button>
         </form>
+
+        <iframe name="iframe" style="display:none;"></iframe>
+
     </div>
     <script>
 function validateForm() {
@@ -179,11 +198,14 @@ function validateForm() {
         document.querySelectorAll('input[name="satisfaction"]').forEach(input => {
             input.addEventListener('change', validateForm);
         });
-
         // Initial validation check
         validateForm();
-        
 
+        document.querySelector('.submit-btn').addEventListener('click', function() {
+            this.classList.add('success');
+            this.textContent = 'Thank you!';
+        });
+        
     </script>
 </body>
 </html>
