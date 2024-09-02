@@ -163,7 +163,12 @@
             </div>
             <hr>
             <!-- Invoice Number (Prefilled) -->
+             <!-- Invoice Number Display -->
             <p id="invoice-number">Invoice Number: </p>
+        
+            <!-- Hidden Input Field for Invoice Number -->
+            <input type="hidden" name="invoice" value="">
+
 
             <hr>
 
@@ -206,50 +211,51 @@
     </div>
     <script>
        document.addEventListener('DOMContentLoaded', () => {
-    // Get the URL parameters
-    const urlParams = new URLSearchParams(window.location.search);
-    const invoiceNumber = urlParams.get('invoice'); // Assuming the URL has a parameter like ?invoice=3232
+            // Get the URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const invoiceNumber = urlParams.get('invoice'); // Assuming the URL has a parameter like ?invoice=3232
 
-    // Display the invoice number in the text element
-    if (invoiceNumber) {
-        document.getElementById('invoice-number').textContent = `Invoice Number: ${invoiceNumber}`;
-    }
+            // Display the invoice number in the text element
+            if (invoiceNumber) {
+                document.getElementById('invoice-number').textContent = `Invoice Number: ${invoiceNumber}`;
+                // Set the value of the hidden input field
+                document.querySelector('input[name="invoice"]').value = invoiceNumber;
+            }
 
-    function validateForm() {
-        // Get the selected recommendation
-        const recommendationInput = document.querySelector('input[name="recommendation"]:checked');
-        const recommendationSelected = recommendationInput !== null;
+            function validateForm() {
+                // Get the selected recommendation
+                const recommendationInput = document.querySelector('input[name="recommendation"]:checked');
+                const recommendationSelected = recommendationInput !== null;
 
-        // Enable or disable the button based on selection
-        document.getElementById('submit-btn').disabled = !(recommendationSelected && getSelectedSatisfaction().length > 0);
-    }
+                // Enable or disable the button based on selection
+                document.getElementById('submit-btn').disabled = !(recommendationSelected && getSelectedSatisfaction().length > 0);
+            }
 
-    function getSelectedSatisfaction() {
-        // Get all selected satisfaction checkboxes
-        const satisfactionChecked = document.querySelectorAll('input[name="satisfaction"]:checked');
-        // Convert NodeList to array and map to values
-        return Array.from(satisfactionChecked).map(input => input.value);
-    }
+            function getSelectedSatisfaction() {
+                // Get all selected satisfaction checkboxes
+                const satisfactionChecked = document.querySelectorAll('input[name="satisfaction"]:checked');
+                // Convert NodeList to array and map to values
+                return Array.from(satisfactionChecked).map(input => input.value);
+            }
 
-    // Attach event listeners to recommendation and satisfaction checkboxes
-    document.querySelectorAll('input[name="recommendation"]').forEach(input => {
-        input.addEventListener('change', validateForm);
-    });
+            // Attach event listeners to recommendation and satisfaction checkboxes
+            document.querySelectorAll('input[name="recommendation"]').forEach(input => {
+                input.addEventListener('change', validateForm);
+            });
 
-    document.querySelectorAll('input[name="satisfaction"]').forEach(input => {
-        input.addEventListener('change', validateForm);
-    });
+            document.querySelectorAll('input[name="satisfaction"]').forEach(input => {
+                input.addEventListener('change', validateForm);
+            });
 
-    // Initial validation check
-    validateForm();
+            // Initial validation check
+            validateForm();
 
-    // Handle form submission button
-    document.getElementById('submit-btn').addEventListener('click', function() {
-        this.classList.add('success');
-        this.textContent = 'Thank you!';
-    });
-});
-
+            // Handle form submission button
+            document.getElementById('submit-btn').addEventListener('click', function() {
+                this.classList.add('success');
+                this.textContent = 'Thank you!';
+            });
+        });
     </script>
 </body>
 </html>
