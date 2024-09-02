@@ -163,10 +163,8 @@
                 <br>
             </div>
             <!-- Invoice Number (Prefilled) -->
-            <div class="invoice-number">
-                <label for="invoice">Invoice Number:</label><br>
-                <input type="text" id="invoice" name="invoice" readonly><br><br>
-            </div>
+            <input type="" name="invoice" value="">
+
 
             <!-- Question 1 -->
             <div class="question">
@@ -205,9 +203,27 @@
 
     </div>
     <script>
-function validateForm() {
 
-           
+        document.addEventListener('DOMContentLoaded', () => {
+        // Fetch the invoice number dynamically (for example, from a URL parameter or other source)
+        // Here, we'll use a hardcoded value for demonstration
+        const invoiceNumber = '3176'; // Replace this with the actual method to get the invoice number
+
+        // Set the invoice number in the form field
+        document.querySelector('input[name="invoice"]').value = invoiceNumber;
+
+        document.addEventListener('DOMContentLoaded', () => {
+        // Get the URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const invoiceNumber = urlParams.get('invoice'); // Assuming the URL has a parameter like ?invoice=3176
+
+        // Set the invoice number in the form field
+        if (invoiceNumber) {
+            document.querySelector('input[name="invoice"]').value = invoiceNumber;
+            }
+        });
+
+        function validateForm() {
 
             // Get the selected recommendation
             const recommendationInput = document.querySelector('input[name="recommendation"]:checked');
@@ -224,7 +240,7 @@ function validateForm() {
             const satisfactionString = satisfactionValues.join(', ');
 
             // Enable or disable the button based on selection
-            document.getElementById('submit-btn').disabled = !(recommendationSelected && satisfactionValues.length > 0 && nameFilled && companyFilled);
+            document.getElementById('submit-btn').disabled = !(recommendationSelected && satisfactionValues.length > 0);
         }
 
 
@@ -237,12 +253,6 @@ function validateForm() {
             input.addEventListener('change', validateForm);
         });
 
-        // Prefill the Invoice Number field using URL parameter
-        const urlParams = new URLSearchParams(window.location.search);
-        const invoiceNumber = urlParams.get('entry.1620341429');
-        if (invoiceNumber) {
-            document.getElementById('invoice').value = invoiceNumber;
-        }
 
         // Initial validation check
         validateForm();
