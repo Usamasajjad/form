@@ -227,10 +227,6 @@ function validateForm() {
             document.getElementById('submit-btn').disabled = !(recommendationSelected && satisfactionValues.length > 0 && nameFilled && companyFilled);
         }
 
-        // Attach event listeners to Name and Company input fields
-        document.querySelectorAll('input[name="name"], input[name="company"]').forEach(input => {
-            input.addEventListener('input', validateForm);
-        });
 
         // Attach event listeners to recommendation and satisfaction checkboxes
         document.querySelectorAll('input[name="recommendation"]').forEach(input => {
