@@ -143,6 +143,11 @@
             
         }
 
+        #invoice-number-value {
+            color: green; /* Change to your desired color */
+            font-weight: bold; /* Optional: make the number bold */
+        }
+
     </style>
 </head>
 <body>
@@ -162,9 +167,9 @@
                 </p>
             </div>
             <hr>
-            <!-- Invoice Number (Prefilled) -->
+
              <!-- Invoice Number Display -->
-            <p id="invoice-number">Invoice Number: </p>
+            <p id="invoice-number">Invoice Number: <span id="invoice-number-value"></span></p>
         
             <!-- Hidden Input Field for Invoice Number -->
             <input type="hidden" name="invoice" value="">
@@ -217,7 +222,7 @@
 
             // Display the invoice number in the text element
             if (invoiceNumber) {
-                document.getElementById('invoice-number').textContent = `Invoice Number: ${invoiceNumber}`;
+                document.getElementById('invoice-number-value').textContent = invoiceNumber;
                 // Set the value of the hidden input field
                 document.querySelector('input[name="invoice"]').value = invoiceNumber;
             }
