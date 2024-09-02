@@ -162,13 +162,11 @@
                 </p>
                 <br>
             </div>
-            <!-- Name -->
-            <label for="name">Name:</label><br>
-            <input type="text" id="name" name="name" required><br><br>
-            
-            <!-- Company -->
-            <label for="company">Company:</label><br>
-            <input type="text" id="company" name="company" required><br><br>
+            <!-- Invoice Number (Prefilled) -->
+            <div class="invoice-number">
+                <label for="invoice">Invoice Number:</label><br>
+                <input type="text" id="invoice" name="invoice" readonly><br><br>
+            </div>
 
             <!-- Question 1 -->
             <div class="question">
@@ -209,13 +207,7 @@
     <script>
 function validateForm() {
 
-            // Get the Name and Company fields
-            const nameInput = document.querySelector('input[name="name"]').value.trim();
-            const companyInput = document.querySelector('input[name="company"]').value.trim();
-
-            // Check if Name and Company fields are filled
-            const nameFilled = nameInput !== '';
-            const companyFilled = companyInput !== '';
+           
 
             // Get the selected recommendation
             const recommendationInput = document.querySelector('input[name="recommendation"]:checked');
@@ -248,6 +240,14 @@ function validateForm() {
         document.querySelectorAll('input[name="satisfaction"]').forEach(input => {
             input.addEventListener('change', validateForm);
         });
+
+        // Prefill the Invoice Number field using URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const invoiceNumber = urlParams.get('entry.1620341429');
+        if (invoiceNumber) {
+            document.getElementById('invoice').value = invoiceNumber;
+        }
+
         // Initial validation check
         validateForm();
 
