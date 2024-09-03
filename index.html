@@ -213,59 +213,53 @@
 
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+           document.addEventListener('DOMContentLoaded', () => {
             // Get the URL parameters
             const urlParams = new URLSearchParams(window.location.search);
-            const invoiceNumber = urlParams.get('invoice'); // Get the invoice number from URL
-            const projectName = urlParams.get('project'); // Get the project name from URL
-        
-            // Display the project name
+            const invoiceNumber = urlParams.get('invoice'); // Assuming the URL has a parameter like ?invoice=3232
+            const projectName = urlParams.get('project'); // Assuming the URL has a parameter like ?project=Project%20Name
+
+            // Display the project name in the text element
             if (projectName) {
                 document.getElementById('project-name-value').textContent = projectName;
-            }
-        
-            // Display the invoice number
-            if (invoiceNumber) {
-                document.getElementById('invoice-number-value').textContent = invoiceNumber;
-                // Set the value of the hidden input field
+                // Set the value of the hidden input field for invoice number
                 document.querySelector('input[name="invoice"]').value = invoiceNumber;
             }
-        
+
             function validateForm() {
                 // Get the selected recommendation
                 const recommendationInput = document.querySelector('input[name="recommendation"]:checked');
                 const recommendationSelected = recommendationInput !== null;
-            
+
                 // Enable or disable the button based on selection
                 document.getElementById('submit-btn').disabled = !(recommendationSelected && getSelectedSatisfaction().length > 0);
             }
-        
+
             function getSelectedSatisfaction() {
                 // Get all selected satisfaction checkboxes
                 const satisfactionChecked = document.querySelectorAll('input[name="satisfaction"]:checked');
                 // Convert NodeList to array and map to values
                 return Array.from(satisfactionChecked).map(input => input.value);
             }
-        
+
             // Attach event listeners to recommendation and satisfaction checkboxes
             document.querySelectorAll('input[name="recommendation"]').forEach(input => {
                 input.addEventListener('change', validateForm);
             });
-        
+
             document.querySelectorAll('input[name="satisfaction"]').forEach(input => {
                 input.addEventListener('change', validateForm);
             });
-        
+
             // Initial validation check
             validateForm();
-        
+
             // Handle form submission button
             document.getElementById('submit-btn').addEventListener('click', function() {
                 this.classList.add('success');
                 this.textContent = 'Thank you!';
             });
         });
-
     </script>
 </body>
 </html>
